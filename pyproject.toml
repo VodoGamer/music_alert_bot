@@ -6,31 +6,31 @@ authors = ["VodoGamer <vodogamer@yandex.ru>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.10"
-telegrinder = "^0.1.dev20"
-asyncpg = "^0.26.0"
+python = "^3.11"
+telegrinder = { git = "https://github.com/timoniq/telegrinder/" }
+asyncpg = "^0.28.0"
 python-dotenv = "^1.0.0"
 loguru = "^0.7.0"
 
 
 [tool.poetry.group.dev.dependencies]
-black = "^22.10.0"
-ruff = "^0.0.260"
+black = "^23.7.0"
+ruff = "^0.0.280"
 pyright = "^1.1.301"
 
 [tool.black]
 line-length = 99
-target-version = ['py310']
+target-version = ['py311']
 
 [tool.ruff]
 select = ["I", "E", "F", "B", "Q"]
 exclude = ["venv", "migrations"]
 line-length = 99
-target-version = "py310"
+target-version = "py311"
 
 [tool.pyright]
 include = ["src"]
-pythonVersion = "3.10"
+pythonVersion = "3.11"
 
 
 [build-system]
