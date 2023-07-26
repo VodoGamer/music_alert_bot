@@ -9,5 +9,5 @@ insert_final_newline = true
 charset = utf-8
 
 [*.json]
-[*.yml]
+[*.y[a]ml]
 indent_size = 2
