@@ -12,7 +12,11 @@ class PerformerSearch:
     cover: bytes | None
 
 
-async def get_performer_info(nickname: str) -> PerformerSearch | None:
+async def get_performer_info(performer_nickname) -> Artist | None:
+    return await _search_performers(performer_nickname)
+
+
+async def get_performer_cover(nickname: str) -> PerformerSearch | None:
     return await _get_performer_info_from_search(await _search_performers(nickname))
 
 

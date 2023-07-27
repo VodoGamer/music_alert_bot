@@ -4,7 +4,8 @@ from telegrinder.types import InputFile
 
 from src.client import api, dispatch
 from src.handlers.keyboards import get_correct_or_no_kb
-from src.services.yandex.performers import get_performer_info
+from src.services.db.users import add_performer_to_user
+from src.services.yandex.performers import get_performer_cover, get_performer_info
 
 dp = Dispatch()
 
@@ -22,7 +23,7 @@ async def add_performer(event: CallbackQuery):
     if not answer.text:
         return
     performer_nickname = answer.text
-    performer = await get_performer_info(performer_nickname)
+    performer = await get_performer_cover(performer_nickname)
     if performer and performer.cover:
         # TODO: handle case when performer or their cover is not found
         await api.send_photo(
@@ -35,8 +36,11 @@ async def add_performer(event: CallbackQuery):
 
 @dp.callback_query(CallbackDataMarkup("correct/yes/<nickname>"))
 async def correct_performer(event: CallbackQuery, nickname: str):
-    if not event.message:
+    performer = await get_performer_info(nickname)
+    if not performer or not event.message:
         return
+    await add_performer_to_user(event.from_user.id, performer.id, nickname)
+
     await api.delete_message(chat_id=event.message.chat.id, message_id=event.message.message_id)
     await api.send_message(
         chat_id=event.message.chat.id,
