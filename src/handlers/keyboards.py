@@ -8,10 +8,10 @@ class KeyboardSet(KeyboardSetYAML):
     KEYBOARD_MENU: InlineKeyboard
 
 
-def get_correct_or_no_kb(performer_nickname: str) -> InlineKeyboardMarkup:
+def get_correct_or_no_kb(performer_id: int) -> InlineKeyboardMarkup:
     keyboard = InlineKeyboard()
-    keyboard.add(InlineButton("✅ Правильно", callback_data=f"correct/yes/{performer_nickname}"))
-    keyboard.add(InlineButton("⛔ Неправильно", callback_data=f"correct/no/{performer_nickname}"))
+    keyboard.add(InlineButton("✅ Правильно", callback_data=f"correct/yes/{performer_id}"))
+    keyboard.add(InlineButton("⛔ Неправильно", callback_data=f"correct/no/{performer_id}"))
     return keyboard.get_markup()
 
 
