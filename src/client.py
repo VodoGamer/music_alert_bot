@@ -2,6 +2,7 @@
 import gettext
 from pathlib import Path
 
+from loguru import logger
 from telegrinder import API, Dispatch, Telegrinder, Token
 from telegrinder.tools import HTMLFormatter
 from yandex_music import ClientAsync
@@ -13,6 +14,7 @@ gnu_translations = gettext.translation(
 )
 gettext = gnu_translations.gettext
 
+logger = logger
 formatter = HTMLFormatter
 dispatch = Dispatch()
 api = API(token=Token(TELEGRAM_TOKEN))

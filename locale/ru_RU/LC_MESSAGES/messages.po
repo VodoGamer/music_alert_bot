@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-07-27 18:05+0300\n"
+"POT-Creation-Date: 2023-07-27 20:38+0300\n"
 "PO-Revision-Date: 2023-07-27 17:58+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru_RU\n"
@@ -23,19 +23,29 @@ msgstr ""
 msgid "request_performer_nickname"
 msgstr "Напишите псевдоним исполнителя:"
 
-#: src/handlers/add_performer.py:34
+#: src/handlers/add_performer.py:32 src/handlers/add_performer.py:36
 msgid "performer_doesnt_exist"
-msgstr "😓 Мне не удалось найти такого исполнителя в Яндекс Музыке, попробуйте уточнить запрос"
+msgstr ""
+"😓 Мне не удалось найти такого исполнителя в Яндекс Музыке, попробуйте "
+"уточнить запрос"
 
-#: src/handlers/add_performer.py:41
+#: src/handlers/add_performer.py:40 src/handlers/add_performer.py:46
 msgid "best_result_of_performer_search"
-msgstr "лучший результат: исполнитель {}.\nЭто правильно?"
+msgstr ""
+"лучший результат: исполнитель {}.\n"
+"Это правильно?"
 
-#: src/handlers/add_performer.py:57
+#: src/handlers/add_performer.py:62
 msgid "user_select_new_performer"
 msgstr "✨ Вы начали следить за релизами {}"
 
+#: src/handlers/add_performer.py:71
+msgid "wrong_performer_search"
+msgstr "😓 Мне жаль что не получилось найти вашего исполнителя, попробуйте уточнить запрос"
+
 #: src/handlers/hello.py:15
 msgid "enrollment"
-msgstr "Привет, {}!\nЯ — {:bold}, твой помощник в мире поиска новой музыки."
+msgstr ""
+"Привет, {}!\n"
+"Я — {:bold}, твой помощник в мире поиска новой музыки."
 

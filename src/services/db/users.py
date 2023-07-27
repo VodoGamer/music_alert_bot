@@ -2,6 +2,7 @@ from pathlib import Path
 
 from asyncpg import Connection, connect
 
+from src.client import logger
 from src.config.env import POSTGRES_CONNECT
 
 
@@ -22,6 +23,7 @@ async def add_performer_to_user(user_id: int, performer_id: int, performer_nickn
 async def _execute_query(query_filename: str, *args):
     db = await _get_db()
     query = await _get_query(query_filename)
+    logger.debug(f"execute db operation: {query=} with {args=}")
     await db.execute(query, *args)
 
 
