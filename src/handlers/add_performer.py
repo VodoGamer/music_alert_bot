@@ -2,7 +2,7 @@ from telegrinder import CallbackQuery, Dispatch
 from telegrinder.rules import CallbackDataEq, CallbackDataMarkup
 from telegrinder.types import InputFile
 
-from src.client import api, dispatch
+from src.client import api, dispatch, gettext
 from src.handlers.keyboards import get_correct_or_no_kb
 from src.services.db.users import add_performer_to_user
 from src.services.yandex.performers import (
@@ -21,7 +21,7 @@ async def add_performer(event: CallbackQuery):
     await api.edit_message_text(
         chat_id=event.message.chat.id,
         message_id=event.message.message_id,
-        text="Напишите псевдоним исполнителя: ",
+        text=gettext("request_performer_nickname"),
     )
     answer, _ = await dispatch.message.wait_for_message(event.message.chat.id)
     if not answer.text:
@@ -30,18 +30,14 @@ async def add_performer(event: CallbackQuery):
     performers = await search_performers(performer_nickname)
     if not performers:
         return await api.send_message(
-            chat_id=answer.chat.id,
-            text=(
-                "😓 Мне не удалось найти такого исполнителя в Яндекс Музыке, попробуйте уточнить "
-                "запрос"
-            ),
+            chat_id=answer.chat.id, text=gettext("performer_doesnt_exist")
         )
     performer = performers[0]
     if not performer.name or not performer.cover:
         return
     await api.send_photo(
         answer.chat.id,
-        caption=f"лучший результат: исполнитель {performer.name}.\nЭто правильно?",
+        caption=gettext("best_result_of_performer_search").format(performer.name),
         photo=InputFile(performer.name, await download_performer_cover(performer.cover)),
         reply_markup=get_correct_or_no_kb(performer.id),
     )
@@ -57,5 +53,5 @@ async def correct_performer(event: CallbackQuery, performer_id: int):
     await api.delete_message(chat_id=event.message.chat.id, message_id=event.message.message_id)
     await api.send_message(
         chat_id=event.message.chat.id,
-        text=f"✨ Вы начали следить за релизами {performer.name}",
+        text=gettext("user_select_new_performer").format(performer.name),
     )

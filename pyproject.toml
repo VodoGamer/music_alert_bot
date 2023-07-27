@@ -14,6 +14,7 @@ loguru = "^0.7.0"
 alembic = "^1.11.1"
 psycopg2-binary = "^2.9.6"
 yandex-music = "^2.1.1"
+babel = "^2.12.1"
 
 
 [tool.poetry.group.dev.dependencies]
