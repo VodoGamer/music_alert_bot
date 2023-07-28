@@ -15,6 +15,8 @@ alembic = "^1.11.1"
 psycopg2-binary = "^2.9.6"
 yandex-music = "^2.1.1"
 babel = "^2.12.1"
+pydantic = "^2.1.1"
+ujson = "^5.8.0"
 
 
 [tool.poetry.group.dev.dependencies]
