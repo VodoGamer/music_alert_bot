@@ -7,25 +7,25 @@ from src.client import yandex_client
 
 
 @dataclass(frozen=True, slots=True)
-class PerformerSearch:
+class ArtistSearch:
     nickname: str
     cover: bytes | None
 
 
-async def search_performers(nickname: str) -> list[Artist] | None:
+async def search_artists(nickname: str) -> list[Artist] | None:
     api = await _get_yandex_api()
     search_result = await api.search(nickname, type_="artist")
     if search_result and search_result.artists:
         return search_result.artists.results
 
 
-async def download_performer_cover(url: Cover) -> bytes:
+async def download_artist_cover(url: Cover) -> bytes:
     async with aiohttp.ClientSession() as session:
         async with session.get(url=url.get_url()) as resp:
             return await resp.read()
 
 
-async def get_performer_by_id(id: int) -> Artist | None:
+async def get_artist_by_id(id: int) -> Artist | None:
     api = await _get_yandex_api()
     artists = await api.artists([id])
     return artists[0]

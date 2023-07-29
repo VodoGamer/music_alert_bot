@@ -3,6 +3,6 @@ from typing import Iterable
 
 from telegrinder import Dispatch
 
-from . import add_performer, hello, list_performers
+from . import add_artist, hello, list_artists
 
-dps: Iterable["Dispatch"] = (hello.dp, add_performer.dp, list_performers.dp)
+dps: Iterable["Dispatch"] = (hello.dp, add_artist.dp, list_artists.dp)
