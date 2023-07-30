@@ -1,7 +1,15 @@
 import aiohttp
-from yandex_music import Artist, ClientAsync, Cover
+from yandex_music import Artist, ArtistAlbums, ClientAsync, Cover
 
 from src.client import yandex_client
+
+
+async def get_artist_albums(artist_ids: list[int | str]) -> list[ArtistAlbums | None]:
+    api = await _get_yandex_api()
+    artists_albums: list[ArtistAlbums | None] = []
+    for artist_id in artist_ids:
+        artists_albums.append(await api.artists_direct_albums(artist_id, page_size=0))
+    return artists_albums
 
 
 async def search_artists(nickname: str) -> list[Artist] | None:
