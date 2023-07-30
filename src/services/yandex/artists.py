@@ -1,15 +1,7 @@
-from dataclasses import dataclass
-
 import aiohttp
 from yandex_music import Artist, ClientAsync, Cover
 
 from src.client import yandex_client
-
-
-@dataclass(frozen=True, slots=True)
-class ArtistSearch:
-    nickname: str
-    cover: bytes | None
 
 
 async def search_artists(nickname: str) -> list[Artist] | None:

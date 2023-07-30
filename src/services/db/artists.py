@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from src.db import execute_query
+from src.services.db.main import execute_query
 
 
 class Artist(BaseModel):

@@ -1,7 +1,7 @@
 import ujson
 
-from src.db import execute_query, fetch
 from src.services.db.artists import Artist, register_artist
+from src.services.db.main import execute_query, fetch
 
 
 async def register_user(user_id: int):
