@@ -9,4 +9,3 @@ class StateMessageRule(MessageRule):
 
     async def check(self, message: Message, ctx: dict) -> bool:
         return self.state == await get_state(message.from_user.id)
-

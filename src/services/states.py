@@ -16,4 +16,3 @@ async def set_state(user_id: int, state: State):
 
 async def get_state(user_id: int) -> State:
     return State(await connection.get(str(user_id)))
-
