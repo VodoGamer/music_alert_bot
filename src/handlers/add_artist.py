@@ -1,10 +1,12 @@
-from telegrinder import CallbackQuery, Dispatch
+from telegrinder import CallbackQuery, Dispatch, Message
 from telegrinder.rules import CallbackDataEq, CallbackDataMarkup
 from telegrinder.types import InputFile
 
-from src.client import api, dispatch, gettext, logger
+from src.client import api, gettext, logger
 from src.handlers.keyboards import get_correct_or_no_kb
+from src.rules.state_rules import StateMessageRule
 from src.services.db.users import add_artist_to_user
+from src.services.states import State, set_state
 from src.services.yandex.artists import (
     download_artist_cover,
     get_artist_by_id,
@@ -23,24 +25,28 @@ async def add_artist(event: CallbackQuery):
         message_id=event.message.message_id,
         text=gettext("request_artist_nickname"),
     )
-    answer, _ = await dispatch.message.wait_for_message(event.message.chat.id)
-    if not answer.text:
-        return logger.error(f"{answer=}")
-    artists = await search_artists(answer.text)
+    await set_state(event.from_user.id, State.WaitArtistNickname)
+
+
+@dp.message(StateMessageRule(State.WaitArtistNickname))
+async def artist_search(message: Message):
+    if not message.text:
+        return logger.error(f"{message=}")
+    artists = await search_artists(message.text)
     if not artists:
-        return await api.send_message(chat_id=answer.chat.id, text=gettext("artist_not_exist"))
+        return await api.send_message(chat_id=message.chat.id, text=gettext("artist_not_exist"))
     artist = artists[0]
     if not artist.name:
-        await api.send_message(chat_id=answer.chat.id, text=gettext("artist_not_exist"))
+        await api.send_message(chat_id=message.chat.id, text=gettext("artist_not_exist"))
     elif not artist.cover:
         await api.send_message(
-            chat_id=answer.chat.id,
+            chat_id=message.chat.id,
             text=gettext("best_result_of_artist_search").format(artist.name),
             reply_markup=get_correct_or_no_kb(artist.id),
         )
     else:
         await api.send_photo(
-            answer.chat.id,
+            message.chat.id,
             caption=gettext("best_result_of_artist_search").format(artist.name),
             photo=InputFile(artist.name, await download_artist_cover(artist.cover)),
             reply_markup=get_correct_or_no_kb(artist.id),
