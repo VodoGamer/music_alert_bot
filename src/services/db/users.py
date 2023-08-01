@@ -17,3 +17,7 @@ async def add_artist_to_user(user_id: int, artist_id: int, artist_nickname: str)
 async def get_user_artists(user_id: int) -> list[Artist]:
     artists = await fetch("get_user_artists.sql", user_id)
     return [Artist(**ujson.loads(artist[0])) for artist in artists]
+
+
+async def listen_album(user_id: int, album_id: int):
+    await execute_query("add_listen_album.sql", user_id, album_id)

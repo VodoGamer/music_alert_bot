@@ -5,7 +5,7 @@ from telegrinder.types import InputFile
 from src.client import api, dispatch, gettext, logger
 from src.handlers.keyboards import get_correct_or_no_kb
 from src.services.db.users import add_artist_to_user
-from src.services.yandex.albums_init import albums_init
+from src.services.yandex.albums_init import user_albums_init
 from src.services.yandex.artists import (
     download_artist_cover,
     get_artist_by_id,
@@ -56,7 +56,7 @@ async def correct_artist(event: CallbackQuery, artist_id: str):
     await add_artist_to_user(event.from_user.id, int(artist.id), artist.name)
 
     await api.delete_message(chat_id=event.message.chat.id, message_id=event.message.message_id)
-    await albums_init(int(artist_id))
+    await user_albums_init(int(artist_id), event.from_user.id)
     await api.send_message(
         chat_id=event.message.chat.id,
         text=gettext("user_select_new_artist").format(artist.name),
