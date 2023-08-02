@@ -3,6 +3,7 @@ import asyncio
 
 from src.client import bot, dispatch, logger
 from src.handlers import dps
+from src.services.yandex.albums_poling import albums_poling
 
 loop = asyncio.new_event_loop()
 for dp in dps:
@@ -12,6 +13,7 @@ for dp in dps:
 
 bot.dispatch = dispatch
 loop.create_task(bot.run_polling())
+loop.create_task(albums_poling())
 try:
     loop.run_forever()
 except KeyboardInterrupt:
