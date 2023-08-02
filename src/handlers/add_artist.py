@@ -7,6 +7,7 @@ from src.handlers.keyboards import get_correct_or_no_kb
 from src.rules.state_rules import StateMessageRule
 from src.services.db.users import add_artist_to_user
 from src.services.states import State, set_state
+from src.services.yandex.albums_init import user_albums_init
 from src.services.yandex.artists import (
     download_artist_cover,
     get_artist_by_id,
@@ -54,13 +55,14 @@ async def artist_search(message: Message):
 
 
 @dp.callback_query(CallbackDataMarkup("correct/yes/<artist_id>"))
-async def correct_artist(event: CallbackQuery, artist_id: int):
-    artist = await get_artist_by_id(artist_id)
+async def correct_artist(event: CallbackQuery, artist_id: str):
+    artist = await get_artist_by_id(int(artist_id))
     if not artist or not artist.name or not event.message:
         return logger.error(f"{artist_id=} {artist=} {event=}")
     await add_artist_to_user(event.from_user.id, int(artist.id), artist.name)
 
     await api.delete_message(chat_id=event.message.chat.id, message_id=event.message.message_id)
+    await user_albums_init(int(artist_id), event.from_user.id)
     await api.send_message(
         chat_id=event.message.chat.id,
         text=gettext("user_select_new_artist").format(artist.name),
