@@ -20,3 +20,9 @@ async def register_artist(artist_id: int, artist_nickname: str):
 
 async def get_all_artist_ids() -> list[ArtistIdsReturn]:
     return await fetch("get_artist_ids.sql")
+
+
+async def get_artist_albums_ids(artist_id: int) -> list[int] | None:
+    album_ids = await fetch("get_artist_albums_ids.sql", artist_id)
+    if album_ids:
+        return [album_id[0] for album_id in album_ids]
