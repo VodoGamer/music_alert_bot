@@ -14,5 +14,11 @@ async def set_state(user_id: int, state: State):
     await connection.set(str(user_id), state.value)
 
 
-async def get_state(user_id: int) -> State:
-    return State(await connection.get(str(user_id)))
+async def get_state(user_id: int) -> State | None:
+    response = await connection.get(str(user_id))
+    if response:
+        return State(response)
+
+
+async def remove_state(user_id: int):
+    await connection.delete(str(user_id))
