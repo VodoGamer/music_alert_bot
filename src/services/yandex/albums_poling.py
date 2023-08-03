@@ -7,6 +7,7 @@ from src.handlers.release_notifications import send_release_notification_to_user
 from src.services.db.albums import add_album
 from src.services.db.artists import get_all_artists, get_artist_albums_ids, get_artist_fans
 from src.services.db.collaborations import add_artist_to_collaboration
+from src.services.db.users import listen_album
 from src.services.yandex.artists import get_albums as api_get_albums
 from src.services.yandex.artists import get_artist_albums as api_get_artist_albums
 
@@ -47,7 +48,7 @@ async def find_missing_album_ids(
 
 
 async def check_album_on_new(album: Album, artist_ids: list[int]):
-    if not album.title or not album.id or not album.release_date:
+    if not album.title or not album.id:
         return logger.error(f"{album=}")
     await add_album(album.id, album.get_cover_url(), album.release_date, album.title)
     for artist in album.artists:
@@ -60,4 +61,6 @@ async def process_user_notification(artist: Artist, album: Album):
     user_ids = await get_artist_fans(artist.id)
     if user_ids:
         for user_id in user_ids:
+            if album.id:
+                await listen_album(user_id[0], album.id)
             await send_release_notification_to_user(user_id[0], album, artist)

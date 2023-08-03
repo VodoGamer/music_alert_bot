@@ -1,4 +1,4 @@
-from yandex_music import Album, Artist, ArtistAlbums, ClientAsync, Cover
+from yandex_music import Album, Artist, ArtistAlbums, ClientAsync
 
 from src.client import yandex_client
 
