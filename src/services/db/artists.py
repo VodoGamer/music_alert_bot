@@ -1,28 +1,20 @@
-from typing import TypedDict
-
-from pydantic import BaseModel
-
-from src.services.db.main import execute_query, fetch
+from src.services.db import execute_query, fetch
+from src.services.db.models import Artist
 
 
-class Artist(BaseModel):
-    id: int
-    nickname: str
+async def register_artist(artist_id: int, artist_nickname: str) -> None:
+    await execute_query("add_artist.sql", *locals().values())
 
 
-class ArtistIdsReturn(TypedDict):
-    id: int | str
-
-
-async def register_artist(artist_id: int, artist_nickname: str):
-    await execute_query("add_artist.sql", artist_id, artist_nickname)
-
-
-async def get_all_artist_ids() -> list[ArtistIdsReturn]:
-    return await fetch("get_artist_ids.sql")
+async def get_all_artists() -> list[Artist] | None:
+    return await fetch("get_all_artists.sql")
 
 
 async def get_artist_albums_ids(artist_id: int) -> list[int] | None:
-    album_ids = await fetch("get_artist_albums_ids.sql", artist_id)
+    album_ids = await fetch("get_artist_albums_ids.sql", *locals().values())
     if album_ids:
         return [album_id[0] for album_id in album_ids]
+
+
+async def get_artist_fans(artist_id: int) -> list[int] | None:
+    return await fetch("get_artist_fans.sql", artist_id)
