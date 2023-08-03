@@ -16,5 +16,5 @@ async def get_artist_albums_ids(artist_id: int) -> list[int] | None:
         return [album_id[0] for album_id in album_ids]
 
 
-async def get_artist_fans(artist_id: int) -> list[int] | None:
+async def get_artist_fans(artist_id: int) -> list[tuple[int]] | None:
     return await fetch("get_artist_fans.sql", artist_id)

@@ -60,4 +60,4 @@ async def process_user_notification(artist: Artist, album: Album):
     user_ids = await get_artist_fans(artist.id)
     if user_ids:
         for user_id in user_ids:
-            await send_release_notification_to_user(user_id, album, artist)
+            await send_release_notification_to_user(user_id[0], album, artist)

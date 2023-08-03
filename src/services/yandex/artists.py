@@ -1,7 +1,6 @@
 from yandex_music import Album, Artist, ArtistAlbums, ClientAsync, Cover
 
 from src.client import yandex_client
-from src.services.yandex import download_cover
 
 
 async def get_artist_albums(artist_ids: list[int | str]) -> list[ArtistAlbums | None]:
@@ -22,10 +21,6 @@ async def search_artists(nickname: str) -> list[Artist] | None:
     search_result = await api.search(nickname, type_="artist")
     if search_result and search_result.artists:
         return search_result.artists.results
-
-
-async def download_artist_cover(url: Cover) -> bytes:
-    return await download_cover(url.get_url())
 
 
 async def get_artist_by_id(id: int) -> Artist | None:

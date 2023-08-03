@@ -8,11 +8,7 @@ from src.rules.state_rules import StateMessageRule
 from src.services.db.users import add_artist_to_user
 from src.services.states import State, remove_state, set_state
 from src.services.yandex.albums_init import user_albums_init
-from src.services.yandex.artists import (
-    download_artist_cover,
-    get_artist_by_id,
-    search_artists,
-)
+from src.services.yandex.artists import get_artist_by_id, search_artists
 
 dp = Dispatch()
 
@@ -49,7 +45,7 @@ async def artist_search(message: Message):
         await api.send_photo(
             message.chat.id,
             caption=gettext("best_result_of_artist_search").format(artist.name),
-            photo=InputFile(artist.name, await download_artist_cover(artist.cover)),
+            photo=InputFile(artist.name, await artist.cover.download_bytes_async()),
             reply_markup=get_correct_or_no_kb(artist.id),
         )
 
