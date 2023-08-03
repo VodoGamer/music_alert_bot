@@ -15,5 +15,5 @@ async def list_artists(event: CallbackQuery):
     await api.edit_message_text(
         chat_id=event.message.chat.id,
         message_id=event.message.message_id,
-        text="\n".join([artist.nickname for artist in artists]),
+        text="\n".join([artist[0] for artist in artists]),
     )

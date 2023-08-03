@@ -13,7 +13,7 @@ async def add_artist_to_user(user_id: int, artist_id: int, artist_nickname: str)
     await execute_query("add_artist_to_user.sql", user_id, artist_id)
 
 
-async def get_user_favorite_artists(user_id: int) -> list[Artist] | None:
+async def get_user_favorite_artists(user_id: int) -> list[tuple[str]] | None:
     return await fetch("get_user_favorite_artists.sql", user_id)
 
 
