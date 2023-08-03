@@ -1,6 +1,5 @@
 from src.services.db import execute_query, fetch
 from src.services.db.artists import register_artist
-from src.services.db.models import Artist
 
 
 async def register_user(user_id: int) -> None:
