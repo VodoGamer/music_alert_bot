@@ -7,10 +7,10 @@ WORKDIR /$PROJECT_NAME
 
 RUN pip install poetry
 
-COPY poetry.loc[k] pyproject.toml README.md ./
+COPY poetry.loc[k] pyproject.toml README.md .env ./
 RUN poetry install --only main
 
 COPY . ./
 
-
+RUN chmod +x ./docker-entrypoint.sh
 CMD [ "poetry", "run", "python", "-m", "src" ]

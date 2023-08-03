@@ -2,12 +2,14 @@ from enum import Enum
 
 import redis.asyncio as redis
 
+from src.config.env import REDIS_HOST
+
 
 class State(Enum):
     WaitArtistNickname = "WaitArtistNickname"
 
 
-connection = redis.Redis(decode_responses=True)
+connection = redis.Redis(host=REDIS_HOST, decode_responses=True)
 
 
 async def set_state(user_id: int, state: State):
