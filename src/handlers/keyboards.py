@@ -1,12 +1,6 @@
-from telegrinder import InlineButton, InlineKeyboard, KeyboardSetYAML
+from telegrinder import InlineButton, InlineKeyboard
 from telegrinder.types import InlineKeyboardMarkup
 from yandex_music import Album
-
-
-class KeyboardSet(KeyboardSetYAML):
-    __config__ = "src/keyboard_set.yaml"
-
-    KEYBOARD_MENU: InlineKeyboard
 
 
 def get_correct_or_no_kb(artist_id: int) -> InlineKeyboardMarkup:
@@ -22,6 +16,3 @@ def get_release_link_kb(release: Album) -> InlineKeyboardMarkup:
         InlineButton("Перейти к релизу", url=f"https://music.yandex.ru/album/{release.id}/")
     )
     return keyboard.get_markup()
-
-
-KeyboardSet.load()

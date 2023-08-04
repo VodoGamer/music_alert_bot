@@ -1,5 +1,5 @@
 from telegrinder import CallbackQuery, Dispatch, Message
-from telegrinder.rules import CallbackDataEq, CallbackDataMarkup
+from telegrinder.rules import CallbackDataEq, CallbackDataMarkup, Text
 from telegrinder.types import InputFile
 
 from src.client import api, gettext, logger
@@ -13,16 +13,14 @@ from src.services.yandex.artists import get_artist_by_id, search_artists
 dp = Dispatch()
 
 
-@dp.callback_query(CallbackDataEq("menu/add_artist"))
-async def add_artist(event: CallbackQuery):
-    if not event.message:
-        return logger.error(f"{event=}")
+@dp.message(Text("/add_artist"))
+async def add_artist(message: Message):
     await api.edit_message_text(
-        chat_id=event.message.chat.id,
-        message_id=event.message.message_id,
+        chat_id=message.chat.id,
+        message_id=message.message_id,
         text=gettext("request_artist_nickname"),
     )
-    await set_state(event.from_user.id, State.WaitArtistNickname)
+    await set_state(message.from_user.id, State.WaitArtistNickname)
 
 
 @dp.message(StateMessageRule(State.WaitArtistNickname))
