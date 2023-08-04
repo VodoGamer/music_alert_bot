@@ -1,3 +1,5 @@
+import re
+
 from telegrinder import CallbackQuery, Dispatch, Message
 from telegrinder.rules import CallbackDataMarkup, Text
 from telegrinder.types import InputFile
@@ -23,10 +25,20 @@ async def add_artist(message: Message):
 async def artist_search(message: Message):
     if not message.text:
         return logger.error(f"{message=}")
-    artists = await search_artists(message.text)
-    if not artists:
-        return await api.send_message(chat_id=message.chat.id, text=gettext("artist_not_exist"))
-    artist = artists[0]
+    if not message.text.startswith("https://"):
+        artists = await search_artists(message.text)
+        if not artists:
+            return await api.send_message(
+                chat_id=message.chat.id, text=gettext("artist_not_exist")
+            )
+        artist = artists[0]
+    else:
+        match = re.match(r"https:\/\/music\.yandex\.com\/artist\/(\d*)\??", message.text)
+        if not match:
+            return
+        artist = await get_artist_by_id(int(match.groups()[0]))
+        if not artist:
+            return
     if not artist.name:
         await api.send_message(chat_id=message.chat.id, text=gettext("artist_not_exist"))
     elif not artist.cover:
@@ -39,7 +51,9 @@ async def artist_search(message: Message):
         await api.send_photo(
             message.chat.id,
             caption=gettext("best_result_of_artist_search").format(artist.name),
-            photo=InputFile(artist.name, await artist.cover.download_bytes_async()),
+            photo=InputFile(
+                artist.name, await artist.cover.download_bytes_async(size="m1000x1000")
+            ),
             reply_markup=get_correct_or_no_kb(artist.id),
         )
 
@@ -61,7 +75,12 @@ async def correct_artist(event: CallbackQuery, artist_id: str):
 
 
 @dp.callback_query(CallbackDataMarkup("correct/no/<artist_id>"))
-async def wrong_artist(event: CallbackQuery):
+async def wrong_artist(event: CallbackQuery, artist_id: str):
     if not event.message:
         return logger.debug(f"{event=}")
-    await api.edit_message_text(chat_id=event.message.chat.id, text=gettext("wrong_artist_search"))
+    await api.delete_message(chat_id=event.message.chat.id, message_id=event.message.message_id)
+    await api.send_message(
+        chat_id=event.message.chat.id,
+        text=gettext("wrong_artist_search"),
+    )
+    await remove_state(event.message.from_user.id)

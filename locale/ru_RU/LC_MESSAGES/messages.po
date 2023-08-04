@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-08-02 12:09+0300\n"
+"POT-Creation-Date: 2023-08-04 11:43+0300\n"
 "PO-Revision-Date: 2023-07-27 17:58+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru_RU\n"
@@ -19,39 +19,42 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.12.1\n"
 
-#: src/handlers/add_artist.py:27
+#: src/handlers/add_artist.py:20
 msgid "request_artist_nickname"
-msgstr "Напишите псевдоним исполнителя:"
+msgstr "Напишите псевдоним исполнителя или отправьте ссылку на его карточку:"
 
-#: src/handlers/add_artist.py:38 src/handlers/add_artist.py:41
+#: src/handlers/add_artist.py:32 src/handlers/add_artist.py:43
 msgid "artist_not_exist"
 msgstr ""
 "😓 Мне не удалось найти такого исполнителя в Яндекс Музыке, попробуйте "
 "уточнить запрос"
 
-#: src/handlers/add_artist.py:45 src/handlers/add_artist.py:51
+#: src/handlers/add_artist.py:47 src/handlers/add_artist.py:53
 msgid "best_result_of_artist_search"
 msgstr ""
 "лучший результат: исполнитель {}.\n"
 "Это правильно?"
 
-#: src/handlers/add_artist.py:68
+#: src/handlers/add_artist.py:72
 msgid "user_select_new_artist"
 msgstr "✨ Вы начали следить за релизами {}"
 
-#: src/handlers/add_artist.py:76
+#: src/handlers/add_artist.py:84
 msgid "wrong_artist_search"
 msgstr ""
 "😓 Мне жаль что не получилось найти вашего исполнителя, попробуйте "
 "уточнить запрос"
 
-#: src/handlers/hello.py:15
+#: src/handlers/hello.py:14
 msgid "enrollment"
 msgstr ""
 "Привет, {}!\n"
 "Я — {:bold}, твой помощник в мире поиска новой музыки."
 
-#: src/handlers/release_notifications.py:7
+#: src/handlers/release_notifications.py:15
+#: src/handlers/release_notifications.py:25
 msgid "release_notification"
-msgstr "🎶У {:bold} вышел новый релиз!\n{} — {:bold}"
+msgstr ""
+"🎶У {:bold} вышел новый релиз!\n"
+"{} — {:bold}"
 
