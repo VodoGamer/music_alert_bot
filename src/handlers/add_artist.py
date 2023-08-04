@@ -15,11 +15,7 @@ dp = Dispatch()
 
 @dp.message(Text("/add_artist"))
 async def add_artist(message: Message):
-    await api.edit_message_text(
-        chat_id=message.chat.id,
-        message_id=message.message_id,
-        text=gettext("request_artist_nickname"),
-    )
+    await message.answer(text=gettext("request_artist_nickname"))
     await set_state(message.from_user.id, State.WaitArtistNickname)
 
 
