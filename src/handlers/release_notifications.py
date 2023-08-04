@@ -2,6 +2,7 @@ from telegrinder.types import InputFile
 from yandex_music import Album, Artist
 
 from src.client import api, formatter, gettext
+from src.handlers.keyboards import get_release_link_kb
 
 
 async def send_release_notification_to_user(user_id: int, release: Album, artist: Artist):
@@ -13,4 +14,5 @@ async def send_release_notification_to_user(user_id: int, release: Album, artist
             artist.name, ", ".join(release.artists_name()), release.title
         ),
         parse_mode=formatter.PARSE_MODE,
+        reply_markup=get_release_link_kb(release),
     )

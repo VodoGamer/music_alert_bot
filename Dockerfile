@@ -13,4 +13,6 @@ RUN poetry install --only main
 COPY . ./
 
 RUN chmod +x ./docker-entrypoint.sh
-CMD [ "poetry", "run", "python", "-m", "src" ]
+ENTRYPOINT [ "./docker-entrypoint.sh" ]
+
+CMD [ "python", "-m", "src" ]
