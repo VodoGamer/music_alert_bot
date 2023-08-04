@@ -1,5 +1,5 @@
 from telegrinder import CallbackQuery, Dispatch, Message
-from telegrinder.rules import CallbackDataEq, CallbackDataMarkup, Text
+from telegrinder.rules import CallbackDataMarkup, Text
 from telegrinder.types import InputFile
 
 from src.client import api, gettext, logger
@@ -60,7 +60,7 @@ async def correct_artist(event: CallbackQuery, artist_id: str):
     await remove_state(event.from_user.id)
 
 
-@dp.callback_query(CallbackDataEq("correct/no"))
+@dp.callback_query(CallbackDataMarkup("correct/no/<artist_id>"))
 async def wrong_artist(event: CallbackQuery):
     if not event.message:
         return logger.debug(f"{event=}")
