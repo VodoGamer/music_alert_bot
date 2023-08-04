@@ -4,11 +4,11 @@ from src.client import logger
 from src.services.db.albums import add_album
 from src.services.db.collaborations import add_artist_to_collaboration
 from src.services.db.users import listen_album
-from src.services.yandex.artists import get_artist_albums as api_get_artist_albums
+from src.services.yandex.artists import get_artist_albums as api_get_artists_albums
 
 
 async def user_albums_init(artist_id: int, user_id: int):
-    artists_albums = await api_get_artist_albums([artist_id])
+    artists_albums = await api_get_artists_albums([artist_id])
     if not artists_albums:
         return logger.error(f"{artists_albums=}")
     for artist_albums in artists_albums:

@@ -3,7 +3,7 @@ from yandex_music import Album, Artist, ArtistAlbums, ClientAsync
 from src.client import yandex_client
 
 
-async def get_artist_albums(artist_ids: list[int | str]) -> list[ArtistAlbums | None]:
+async def get_artist_albums(artist_ids: list[int]) -> list[ArtistAlbums | None]:
     api = await _get_yandex_api()
     artists_albums: list[ArtistAlbums | None] = []
     for artist_id in artist_ids:
