@@ -63,12 +63,16 @@ async def correct_artist(event: CallbackQuery, artist_id: str):
     artist = await get_artist_by_id(int(artist_id))
     if not artist or not artist.name or not event.message:
         return logger.error(f"{artist_id=} {artist=} {event=}")
-    await add_artist_to_user(event.from_user.id, int(artist.id), artist.name)
-
     await api.delete_message(chat_id=event.message.chat.id, message_id=event.message.message_id)
+    answer = await api.send_message(
+        chat_id=event.message.chat.id, text=gettext("albums_initializing")
+    )
+
+    await add_artist_to_user(event.from_user.id, int(artist.id), artist.name)
     await user_albums_init(int(artist_id), event.from_user.id)
-    await api.send_message(
+    await api.edit_message_text(
         chat_id=event.message.chat.id,
+        message_id=answer.unwrap().message_id,
         text=gettext("user_select_new_artist").format(artist.name),
     )
     await remove_state(event.from_user.id)

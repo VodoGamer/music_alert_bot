@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-08-04 11:43+0300\n"
+"POT-Creation-Date: 2023-08-04 11:48+0300\n"
 "PO-Revision-Date: 2023-07-27 17:58+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru_RU\n"
@@ -35,11 +35,15 @@ msgstr ""
 "лучший результат: исполнитель {}.\n"
 "Это правильно?"
 
-#: src/handlers/add_artist.py:72
+#: src/handlers/add_artist.py:68
+msgid "albums_initializing"
+msgstr "🧾 Добавляем текущие релизы..."
+
+#: src/handlers/add_artist.py:76
 msgid "user_select_new_artist"
 msgstr "✨ Вы начали следить за релизами {}"
 
-#: src/handlers/add_artist.py:84
+#: src/handlers/add_artist.py:88
 msgid "wrong_artist_search"
 msgstr ""
 "😓 Мне жаль что не получилось найти вашего исполнителя, попробуйте "
