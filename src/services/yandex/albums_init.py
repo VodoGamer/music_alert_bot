@@ -9,8 +9,6 @@ from src.services.yandex.artists import get_artist_albums as api_get_artists_alb
 
 async def user_albums_init(artist_id: int, user_id: int):
     artists_albums = await api_get_artists_albums([artist_id])
-    if not artists_albums:
-        return logger.error(f"{artists_albums=}")
     for artist_albums in artists_albums:
         if not artist_albums:
             continue
@@ -19,7 +17,7 @@ async def user_albums_init(artist_id: int, user_id: int):
 
 
 async def user_album_init(album: Album, artist_id: int, user_id: int):
-    if not album.release_date or not album.title or not album.id:
+    if not album.title or not album.id:
         return logger.error(f"{album=}")
     await add_album(album.id, album.get_cover_url(), album.release_date, album.title)
     await add_artist_to_collaboration(artist_id, album.id)

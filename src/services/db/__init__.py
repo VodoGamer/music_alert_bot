@@ -12,19 +12,18 @@ class MyRecord(Record):
         return self[name]
 
 
-async def execute_query(query_filename: str, *args):
+async def execute_query(query_filename: str, *args) -> None:
     db = await _get_db()
     query = await _get_query(query_filename)
     logger.debug(f"execute db operation: {query=} with {args=}")
     await db.execute(query, *args)
 
 
-async def fetch(query_filename: str, *args) -> list[Any] | None:
+async def fetch(query_filename: str, *args) -> list[Any]:
     db = await _get_db()
     query = await _get_query(query_filename)
     logger.debug(f"fetch db operation: {query=} with {args=}")
-    result = await db.fetch(query, *args)
-    return result if result != [] else None
+    return await db.fetch(query, *args)
 
 
 async def _get_query(file_name: str) -> str:

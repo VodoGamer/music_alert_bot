@@ -65,6 +65,7 @@ async def send_information_about_artist(message: Message, artist: Artist):
 
 @dp.callback_query(CallbackDataMarkup("correct/yes/<artist_id>"), CallbackHasMessageRule())
 async def correct_artist(event: CallbackQuery, message: CallbackMessage, artist_id: str):
+    await remove_state(event.from_user.id)
     artist = await get_artist_by_id(int(artist_id))
     if not artist or not artist.name:
         return logger.error(f"{artist_id=} {artist=} {event=}")
@@ -78,11 +79,10 @@ async def correct_artist(event: CallbackQuery, message: CallbackMessage, artist_
         message_id=answer.unwrap().message_id,
         text=gettext("user_select_new_artist").format(artist.name),
     )
-    await remove_state(event.from_user.id)
 
 
 @dp.callback_query(CallbackDataMarkup("correct/no/<artist_id>"), CallbackHasMessageRule())
 async def wrong_artist(event: CallbackQuery, message: CallbackMessage, artist_id: str):
+    await remove_state(event.from_user.id)
     await api.delete_message(chat_id=message.chat.id, message_id=message.message_id)
     await api.send_message(chat_id=message.chat.id, text=gettext("wrong_artist_search"))
-    await remove_state(event.from_user.id)

@@ -10,11 +10,7 @@ async def get_all_artists() -> list[Artist] | None:
     return await fetch("get_all_artists.sql")
 
 
-async def get_artist_albums_ids(artist_ids: list[int]) -> list[int] | None:
-    return await fetch("get_artist_albums_ids.sql", *locals().values())
-
-
-async def get_artist_fans(artist_id: int) -> list[tuple[int]] | None:
+async def get_artist_fan_ids(artist_id: int) -> list[tuple[int]]:
     return await fetch("get_artist_fans.sql", artist_id)
 
 

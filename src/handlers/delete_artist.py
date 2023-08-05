@@ -15,10 +15,9 @@ dp = Dispatch()
 @dp.message(Text("/delete_artist"))
 async def delete_artist(message: Message):
     artists = await get_user_favorite_artists(message.from_user.id)
-    if artists:
-        await message.answer(
-            gettext("choose_artist_for_delete"), reply_markup=get_remove_artist_kb(artists, 1)
-        )
+    await message.answer(
+        gettext("choose_artist_for_delete"), reply_markup=get_remove_artist_kb(artists, 1)
+    )
 
 
 @dp.callback_query(
@@ -26,12 +25,11 @@ async def delete_artist(message: Message):
 )
 async def delete_artist_nav(event: CallbackQuery, message: CallbackMessage, page: str):
     artists = await get_user_favorite_artists(event.from_user.id)
-    if artists:
-        await api.edit_message_reply_markup(
-            message.chat.id,
-            message.message_id,
-            reply_markup=get_remove_artist_kb(artists, int(page)),
-        )
+    await api.edit_message_reply_markup(
+        message.chat.id,
+        message.message_id,
+        reply_markup=get_remove_artist_kb(artists, int(page)),
+    )
 
 
 @dp.callback_query(CallbackDataMarkup("delete_artist/<artist_id>"), CallbackHasMessageRule())
