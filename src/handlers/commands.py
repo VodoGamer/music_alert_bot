@@ -9,5 +9,6 @@ async def set_bot_commands():
         BotCommand(command="/start", description=gettext("command_start")),
         BotCommand(command="/add_artist", description=gettext("command_add_artist")),
         BotCommand(command="/list", description=gettext("command_list")),
+        BotCommand(command="/delete_artist", description=gettext("command_delete_artist")),
     ]
     await api.set_my_commands(commands=commands)

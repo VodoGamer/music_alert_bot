@@ -12,4 +12,4 @@ async def list_artists(message: Message):
     artists = await get_user_favorite_artists(message.from_user.id)
     if not artists:
         return logger.error(f"{artists=}")
-    await message.answer("\n".join([artist[0] for artist in artists]))
+    await message.answer("\n".join([artist.nickname for artist in artists]))

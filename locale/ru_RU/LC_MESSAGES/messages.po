@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-08-05 08:05+0300\n"
+"POT-Creation-Date: 2023-08-05 13:18+0300\n"
 "PO-Revision-Date: 2023-07-27 17:58+0300\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru_RU\n"
@@ -60,6 +60,18 @@ msgstr "Добавить артиста в отслеживаемых"
 #: src/handlers/commands.py:11
 msgid "command_list"
 msgstr "Вывести список отслеживаемых артистов"
+
+#: src/handlers/commands.py:12
+msgid "command_delete_artist"
+msgstr "Удаление артиста из остслеживаемых"
+
+#: src/handlers/delete_artist.py:20
+msgid "choose_artist_for_delete"
+msgstr "Выберите какого исполнителя вы хотите удалить"
+
+#: src/handlers/delete_artist.py:45
+msgid "artist_has_been_deleted"
+msgstr "Исполнитель {} был удалён"
 
 #: src/handlers/hello.py:14
 msgid "enrollment"
