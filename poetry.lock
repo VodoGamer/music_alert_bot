@@ -135,13 +135,13 @@ frozenlist = ">=1.1.0"
 
 [[package]]
 name = "alembic"
-version = "1.11.1"
+version = "1.11.2"
 description = "A database migration tool for SQLAlchemy."
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "alembic-1.11.1-py3-none-any.whl", hash = "sha256:dc871798a601fab38332e38d6ddb38d5e734f60034baeb8e2db5b642fccd8ab8"},
-    {file = "alembic-1.11.1.tar.gz", hash = "sha256:6a810a6b012c88b33458fceb869aef09ac75d6ace5291915ba7fae44de372c01"},
+    {file = "alembic-1.11.2-py3-none-any.whl", hash = "sha256:7981ab0c4fad4fe1be0cf183aae17689fe394ff874fd2464adb774396faf0796"},
+    {file = "alembic-1.11.2.tar.gz", hash = "sha256:678f662130dc540dac12de0ea73de9f89caea9dbea138f60ef6263149bf84657"},
 ]
 
 [package.dependencies]
@@ -1215,8 +1215,8 @@ vbml = "^1.1.post1"
 [package.source]
 type = "git"
 url = "https://github.com/timoniq/telegrinder/"
-reference = "HEAD"
-resolved_reference = "0125ed628084f536959aae448f0f05ead0ac4777"
+reference = "dev"
+resolved_reference = "d94e290d6bbee59bb2c09765c310f62bfc29d4fc"
 
 [[package]]
 name = "typing-extensions"
@@ -1379,4 +1379,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "0a0d9a305d5dc35decad864ff7b42993dd3c86d9c9dd48c6d33d3f6b5bf1d61a"
+content-hash = "3b938a2fa5adfa257737f9d2f65c632f928d33f5c7eb418e391161aa1a79b5f7"

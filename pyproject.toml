@@ -7,7 +7,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
-telegrinder = { git = "https://github.com/timoniq/telegrinder/" }
+telegrinder = { git = "https://github.com/timoniq/telegrinder/", branch = "dev" }
 asyncpg = "^0.28.0"
 python-dotenv = "^1.0.0"
 loguru = "^0.7.0"
