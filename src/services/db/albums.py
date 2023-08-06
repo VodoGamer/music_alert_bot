@@ -11,5 +11,5 @@ async def add_album(id: int, cover_url: str, release_date_str: str | None, title
     await execute_query("add_album.sql", id, cover_url, release_date, title)
 
 
-async def get_all_albums() -> list[Album] | None:
+async def get_all_albums() -> list[Album]:
     return await fetch("get_all_albums.sql")

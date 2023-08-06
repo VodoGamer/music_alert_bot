@@ -6,7 +6,7 @@ async def register_artist(artist_id: int, artist_nickname: str) -> None:
     await execute_query("add_artist.sql", *locals().values())
 
 
-async def get_all_artists() -> list[Artist] | None:
+async def get_all_artists() -> list[Artist]:
     return await fetch("get_all_artists.sql")
 
 

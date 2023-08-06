@@ -1,4 +1,5 @@
 import asyncio
+from datetime import datetime, timedelta, timezone
 
 from yandex_music import Album, Artist
 
@@ -12,21 +13,31 @@ from src.services.yandex.artists import get_albums as api_get_albums
 from src.services.yandex.artists import get_artist_albums as api_get_artists_albums
 
 
-async def albums_poling():
+async def albums_poling_by_time():
     while True:
-        await check_albums_on_new()
+        tz = timezone(timedelta(hours=3))  # UTC+3 for Moscow Time
+        now = datetime.now(tz=tz)
+        midnight = now.replace(hour=0, minute=0, second=1, microsecond=0) + timedelta(days=1)
+        wait_seconds = (midnight - now).total_seconds()
+        await asyncio.sleep(wait_seconds)
+        await sync_all_albums()
+
+
+async def albums_auto_poling():
+    while True:
+        await sync_all_albums()
         await asyncio.sleep(60)
 
 
-async def check_albums_on_new():
+async def sync_all_albums():
     artist_ids = await _db_get_artist_ids()
     missing_album_ids = await _find_missing_album_ids(artist_ids)
     for missing_album_id in missing_album_ids:
         missing_album = await api_get_albums([missing_album_id])
-        await check_album_on_new(missing_album[0], artist_ids)
+        await sync_album(missing_album[0], artist_ids)
 
 
-async def check_album_on_new(album: Album, artist_ids: list[int]):
+async def sync_album(album: Album, artist_ids: list[int]):
     if not album.title or not album.id:
         return logger.error(f"{album=}")
     await add_album(album.id, album.get_cover_url(), album.release_date, album.title)
@@ -45,19 +56,15 @@ async def process_user_notification(artist: Artist, album: Album):
 
 
 async def _db_get_artist_ids() -> list[int]:
-    artists = await get_all_artists()
-    if not artists:
-        return []
-    artist_ids = [artist.id for artist in artists]
+    artist_ids = [artist.id for artist in await get_all_artists()]
     logger.debug(f"{artist_ids=}")
     return artist_ids
 
 
 async def _find_missing_album_ids(artist_ids: list[int]) -> list[int]:
-    api_albums = await _api_get_album_ids(artist_ids)
-    db_model_albums = await get_all_albums()
-    db_albums = [db_album.id for db_album in db_model_albums] if db_model_albums else []
-    missing_album_ids = list(set(api_albums) - set(db_albums))
+    api_album_ids = await _api_get_album_ids(artist_ids)
+    db_album_ids = [db_album.id for db_album in await get_all_albums()]
+    missing_album_ids = list(set(api_album_ids) - set(db_album_ids))
     logger.debug(f"{missing_album_ids=}")
     return missing_album_ids
 
