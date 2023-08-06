@@ -85,4 +85,3 @@ msgid "release_notification"
 msgstr ""
 "🎶У {:bold} вышел новый релиз!\n"
 "{} — {:bold}"
-
