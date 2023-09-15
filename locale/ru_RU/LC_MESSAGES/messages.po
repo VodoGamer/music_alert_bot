@@ -83,5 +83,5 @@ msgstr ""
 #: src/handlers/release_notifications.py:25
 msgid "release_notification"
 msgstr ""
-"🎶У {:bold} вышел новый релиз!\n"
+"🎶У {:bold} вышел новый {release_type}!\n"
 "{} — {:bold}"
