@@ -7,7 +7,7 @@ async def register_user(user_id: int) -> None:
     await execute_query("add_user.sql", user_id)
 
 
-async def add_artist_to_user(user_id: int, artist_id: int, artist_nickname: str) -> None:
+async def add_artist_to_user_favorites(user_id: int, artist_id: int, artist_nickname: str) -> None:
     await register_user(user_id)
     await register_artist(artist_id, artist_nickname)
     await execute_query("add_artist_to_user.sql", user_id, artist_id)

@@ -7,7 +7,7 @@ from src.services.db.users import listen_album
 from src.services.yandex.artists import get_artist_albums as api_get_artists_albums
 
 
-async def user_albums_init(artist_id: int, user_id: int):
+async def artist_albums_init(artist_id: int, user_id: int):
     artists_albums = await api_get_artists_albums([artist_id])
     for artist_albums in artists_albums:
         if not artist_albums:

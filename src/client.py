@@ -2,8 +2,8 @@
 import gettext
 from pathlib import Path
 
-from loguru import logger
 from telegrinder import API, Dispatch, Telegrinder, Token
+from telegrinder.modules import logger
 from telegrinder.tools import HTMLFormatter
 from yandex_music import ClientAsync
 
@@ -18,6 +18,6 @@ logger = logger
 formatter = HTMLFormatter
 dispatch = Dispatch()
 api = API(token=Token(TELEGRAM_TOKEN))
-bot = Telegrinder(api)
+bot = Telegrinder(api=api, dispatch=dispatch)
 
 yandex_client = ClientAsync()
