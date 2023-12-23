@@ -3,7 +3,7 @@ from yandex_music import Album, Artist, ArtistAlbums
 from src.client import yandex_client
 
 
-async def get_artist_albums(artist_ids: list[int]) -> list[ArtistAlbums | None]:
+async def get_artists_albums(artist_ids: list[int]) -> list[ArtistAlbums | None]:
     api = await yandex_client.init()
     artists_albums: list[ArtistAlbums | None] = []
     for artist_id in artist_ids:
@@ -11,9 +11,21 @@ async def get_artist_albums(artist_ids: list[int]) -> list[ArtistAlbums | None]:
     return artists_albums
 
 
-async def get_albums(album_ids: list[int | str]) -> list[Album]:
+async def get_albums_by_artists(artist_ids: list[int]) -> list[Album]:
+    api_artists_albums = await get_artists_albums(artist_ids)
+    api_albums: list[Album] = []
+    for api_artist_albums in api_artists_albums:
+        if not api_artist_albums:
+            continue
+        for api_album in api_artist_albums.albums:
+            if api_album:
+                api_albums.append(api_album)
+    return api_albums
+
+
+async def get_albums(album_ids: list[int]) -> list[Album]:
     api = await yandex_client.init()
-    return await api.albums(album_ids)
+    return await api.albums(list(map(int, album_ids)))
 
 
 async def search_artists(nickname: str) -> list[Artist] | None:

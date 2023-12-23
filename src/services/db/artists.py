@@ -10,10 +10,6 @@ async def get_all_artists() -> list[Artist]:
     return await fetch("get_all_artists.sql")
 
 
-async def get_artist_fan_ids(artist_id: int) -> list[tuple[int]]:
-    return await fetch("get_artist_fans.sql", artist_id)
-
-
 async def delete_artist_from_favorite(artist_id: int, user_id: int) -> None:
     await execute_query("delete_artist_from_favorite.sql", *locals().values())
     await execute_query("delete_user_listened_album.sql", *locals().values())

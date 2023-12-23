@@ -42,11 +42,13 @@ def get_correct_or_no_kb(artist_id: int) -> InlineKeyboardMarkup:
     return keyboard.get_markup()
 
 
+def get_album_link(album: Album) -> str:
+    return f"https://music.yandex.ru/album/{album.id}/"
+
+
 def get_release_link_kb(release: Album) -> InlineKeyboardMarkup:
     keyboard = InlineKeyboard()
-    keyboard.add(
-        InlineButton("Перейти к релизу", url=f"https://music.yandex.ru/album/{release.id}/")
-    )
+    keyboard.add(InlineButton("Перейти к релизу", url=get_album_link(release)))
     return keyboard.get_markup()
 
 
