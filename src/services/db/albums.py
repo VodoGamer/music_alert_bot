@@ -1,7 +1,8 @@
 from datetime import datetime
 
-from src.services.db import execute_query, fetch
 from src.services.db.models import Album
+
+from . import execute_query, fetch
 
 
 async def add_album(id: int, cover_url: str, release_date_str: str | None, title: str) -> None:

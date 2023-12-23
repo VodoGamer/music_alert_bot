@@ -1,24 +1,25 @@
 from datetime import datetime
-from typing import NamedTuple
+
+from . import MyRecord
 
 
-class Album(NamedTuple):
+class Album(MyRecord):
     id: int
     title: str
     cover_url: str
     release_date: datetime
 
 
-class Artist(NamedTuple):
+class Artist(MyRecord):
     id: int
     nickname: str
 
 
-class Collaboration(NamedTuple):
+class Collaboration(MyRecord):
     id: int
     album_id: int
     artist_id: int
 
 
-class User(NamedTuple):
+class User(MyRecord):
     id: int

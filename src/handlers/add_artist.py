@@ -9,8 +9,7 @@ from src.handlers.keyboards import ArtistSearchAction, ArtistSearchData, get_cor
 from src.rules import CallbackDataJsonItemEq, StateMessageRule
 from src.services.db.users import add_artist_to_user_favorites
 from src.services.states import State, remove_state, set_state
-from src.services.yandex.albums_init import artist_albums_init
-from src.services.yandex.artists import get_artist_by_id, search_artists
+from src.services.yandex import get_artist_by_id, init_artist_albums, search_artists
 
 dp = Dispatch()
 
@@ -75,7 +74,7 @@ async def correct_artist_search(event: CallbackQuery, data: ArtistSearchData):
         await api.send_message(chat_id=message.chat.id, text=gettext("albums_initializing"))
     ).unwrap()
     await add_artist_to_user_favorites(event.from_user.id, int(artist.id), artist.name)
-    await artist_albums_init(data.artist_id, event.from_user.id)
+    await init_artist_albums(data.artist_id, event.from_user.id)
     await api.edit_message_text(
         chat_id=message.chat.id,
         message_id=answer.message_id,

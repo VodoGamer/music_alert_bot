@@ -1,4 +1,4 @@
-from src.services.db import execute_query
+from . import execute_query
 
 
 async def add_artist_to_collaboration(artist_id: int, album_id: int) -> None:

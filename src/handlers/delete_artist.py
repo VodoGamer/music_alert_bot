@@ -6,7 +6,7 @@ from src.handlers.keyboards import DELETE_ARTIST_ACTION, DeleteArtistData, get_r
 from src.rules import CallbackDataJsonItemEq
 from src.services.db.artists import delete_artist_from_favorite
 from src.services.db.users import get_user_favorite_artists
-from src.services.yandex.artists import get_artist_by_id
+from src.services.yandex import get_artist_by_id
 
 dp = Dispatch()
 

@@ -3,7 +3,7 @@ from src.services.db.albums import add_album, get_all_albums
 from src.services.db.artists import get_all_artists
 from src.services.db.collaborations import add_artist_to_collaboration
 from src.services.db.models import Artist
-from src.services.yandex.artists import get_albums, get_albums_by_artists
+from src.services.yandex import get_albums, get_albums_by_artist_ids
 
 
 @bot.loop_wrapper.interval(seconds=60)
@@ -27,7 +27,7 @@ async def albums_poling():
 
 
 async def _find_missing_album_ids(db_artists: list[Artist]) -> list[int] | None:
-    api_albums = await get_albums_by_artists([artist.id for artist in db_artists])
+    api_albums = await get_albums_by_artist_ids([artist.id for artist in db_artists])
     api_album_ids: list[int] = [album.id for album in api_albums if album.id]
     db_albums = await get_all_albums()
     db_album_ids = [album.id for album in db_albums]
