@@ -45,7 +45,7 @@ async def send_notification_of_release(user_id: int, release: Album, artist: Art
 
 
 async def send_notification_of_multiple_releases(user_id: int, releases: list[Album]):
-    releases_str = "\n".join(
+    releases_str: str = "\n".join(
         (
             formatter(
                 link(
@@ -65,7 +65,7 @@ async def send_notification_of_multiple_releases(user_id: int, releases: list[Al
     )
     await api.send_message(
         chat_id=user_id,
-        text=f"Новые релизы:\n{releases_str}",
+        text=gettext("multiple_releases_notification") + "\n" + releases_str,
         parse_mode=formatter.PARSE_MODE,
         disable_web_page_preview=True,
     )

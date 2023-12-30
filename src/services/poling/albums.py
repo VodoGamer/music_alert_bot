@@ -8,8 +8,8 @@ from src.services.yandex import get_albums, get_albums_by_artist_ids
 
 @bot.loop_wrapper.interval(seconds=60)
 async def albums_poling():
-    db_artists = await get_all_artists()
-    missing_album_ids = await _find_missing_album_ids(db_artists)
+    db_artists: list[Artist] = await get_all_artists()
+    missing_album_ids: list[int] | None = await _find_missing_album_ids(db_artists)
     if not missing_album_ids:
         return
     missing_albums = await get_albums(missing_album_ids)
